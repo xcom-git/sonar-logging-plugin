@@ -1,4 +1,4 @@
-# sonar-logging-plugin
+# Sonar Logging Plugin
 sonar plugin for scanning with logging standard 
 
 
@@ -237,3 +237,26 @@ SonarQube 10, example
 sonar-scanner -D'sonar.projectKey'=<sonar_project> -D'sonar.sources'=. -D'sonar.language'=java -D'sonar.java.binaries'=./target/classes -D'sonar.host.url'=<sonarqube_url> -D'sonar.token'=<token>
 ```
 
+
+
+
+
+
+
+
+
+#### Others
+
+
+
+As a suggestion, the company provides a unified logging component, wrap GCP or other logging API, facilitating  the setting and verification of logging standard.
+
+
+
+
+
+
+
+
+
+# END
