@@ -4,11 +4,9 @@ A SonarQube plugin for scanning java code with logging rule. These standards can
 1. **Package Import Verification**: import the necessary logging and tracing modules,  for instance, GCP logging modules, to ensure compliance logging practices.
 2. **Sensitive Word Detection**: Scans log content for the presence of sensitive words, to prevent the leak of confidential or sensitive information.
 
+  
 
-
-
-
-
+  
 
 #### CICD pipeline
 
@@ -98,7 +96,7 @@ public void visitImport(ImportTree tree) {
   }
 ```
 
-
+  
 
 ##### Analyze variables
 
