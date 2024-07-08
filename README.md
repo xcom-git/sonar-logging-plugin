@@ -1,5 +1,10 @@
 # Sonar Logging Plugin
-sonar plugin for scanning with logging standard 
+A SonarQube plugin for scanning java code with logging rule. These standards can be flexibly configured by code (TODO:  through a Web API).  Currently, current version of the code supports the following rules:
+
+1. **Package Import Verification**: import the necessary logging and tracing modules,  for instance, GCP logging modules, to ensure compliance logging practices.
+2. **Sensitive Word Detection**: Scans log content for the presence of sensitive words, to prevent the leak of confidential or sensitive information.
+
+
 
 
 
@@ -19,7 +24,7 @@ sonar plugin for scanning with logging standard
 
 #### Rule Code
 
-Part of source code for Java rule, some similar way in other languages.
+Explain core code of the Java rule, some similar way in other languages.
 
 File: $/com/xcom/demo/sonar/logging/checks/XLoggerCheck.java
 
@@ -178,6 +183,22 @@ public void visitImport(ImportTree tree) {
 
 
 #### Debug & Run
+
+
+
+##### Environment
+
+(Suggestion)
+
+> JDK: 17
+>
+> Maven: 3.6.3
+>
+> Jenkins: 2.466
+>
+> SonarQube: 10.6
+
+
 
 
 
