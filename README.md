@@ -8,7 +8,7 @@ A SonarQube plugin for scanning java code with logging rule. These standards can
 
   
 
-#### CICD pipeline
+### CICD pipeline
 
 ![](./img_cicd3605.png)
 
@@ -20,7 +20,7 @@ A SonarQube plugin for scanning java code with logging rule. These standards can
 
 
 
-#### Rule Code
+### Rule Code
 
 Explain core code of the Java rule, some similar way in other languages.
 
@@ -28,7 +28,7 @@ File: $/com/xcom/demo/sonar/logging/checks/XLoggerCheck.java
 
 
 
-##### Configuration  
+#### Configuration  
 
 TODO: Get configuration through web API while running 
 
@@ -66,7 +66,7 @@ TODO: Get configuration through web API while running
 
 
 
-##### Analyze import statements
+#### Analyze import statements
 
 > 1. Check if import all necessary dependencies (logging/trace, etc.)
 > 2. Check if illegal package dependency are imported
@@ -98,7 +98,7 @@ public void visitImport(ImportTree tree) {
 
   
 
-##### Analyze variables
+#### Analyze variables
 
 > 1. Record all variables with its full-type, for example,
 >    { logger: com.google.cloud.logging.Logging }
@@ -128,7 +128,7 @@ public void visitImport(ImportTree tree) {
 
 
 
-##### Analyze express statements
+#### Analyze express statements
 
 > 1. Check if the caller variable in the statement is a logger, If yes then:
 > 2. Check if  the statement contains sensitive words
@@ -180,11 +180,11 @@ public void visitImport(ImportTree tree) {
 
 
 
-#### Debug & Run
+### Debug & Run
 
 
 
-##### Environment
+#### Environment
 
 (Suggestion)
 
@@ -200,7 +200,7 @@ public void visitImport(ImportTree tree) {
 
 
 
-##### IDEA UnitTest
+#### IDEA UnitTest
 
 > Select com.xcom.demo.sonar.logging.AppTest，Start Debugging through right-click menu 
 
@@ -208,7 +208,7 @@ public void visitImport(ImportTree tree) {
 
 
 
-##### Maven Run
+#### Maven Run
 
 setup in SonarQube
 
@@ -238,7 +238,7 @@ SonarQube 10
 
 
 
-##### Sonar Scanner Run
+#### Sonar Scanner Run
 
 setup in SonarQube, refer to `Maven Run`
 
@@ -264,7 +264,7 @@ sonar-scanner -D'sonar.projectKey'=<sonar_project> -D'sonar.sources'=. -D'sonar.
 
 
 
-#### Others
+### Others
 
 
 
