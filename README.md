@@ -76,9 +76,9 @@ TODO: Get configuration through web API while running
 ```
 @Override
 public void visitImport(ImportTree tree) {
-	...
-	
-	// package imported and necessary
+    ...
+    
+    // package imported and necessary
     if (packageMust.contains(line)) {
       packageChecked.add(line);
     }
@@ -219,7 +219,7 @@ pom.xml of Target Project which to be analyzed
 
 ```
 <properties>
-	...
+    ...
     <sonar.host.url>{SonarQube Server Url}</sonar.host.url>
     <sonar.inclusions>**/*.java</sonar.inclusions>
     <sonar.projectKey>{Project in SonarQube}</sonar.projectKey>
