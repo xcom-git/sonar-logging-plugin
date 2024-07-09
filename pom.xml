@@ -30,7 +30,7 @@
             <artifactId>sonar-java-plugin</artifactId>
             <type>sonar-plugin</type>
             <version>${sonarjava.version}</version>
-            <!--<scope>provided</scope>-->
+            <scope>provided</scope>
         </dependency>
 
         <dependency>

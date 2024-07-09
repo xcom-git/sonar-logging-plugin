@@ -1,4 +1,4 @@
-package files;
+package com.demo.test.files;
 
 import com.google.cloud.trace.Tracer;
 import com.google.cloud.trace.core.TraceContext;
@@ -11,7 +11,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * comment for class
+ * sample for UnitTest
+ * NOT for compile
  */
 @RestController
 public class TraceController {
@@ -23,9 +24,14 @@ public class TraceController {
     private Tracer tracer;
 
     /**
-     * comments for method
+     * example of method
      */
     public void doLog() {
-        logging.write(LogEntry.of("my secret " + abc));
+        String pass = "ZPSWvPFEWe8LfuqcHwuD";
+        String password = pass;
+        String user = pass.toLowerCase();
+
+        a.b.c.d(eee.from("my secret: {}", h.i.j + x.y.z()));
+        logging.write(LogEntry.of("my name" + user));
     }
 }
