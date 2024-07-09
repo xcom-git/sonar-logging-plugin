@@ -79,21 +79,20 @@ public void visitImport(ImportTree tree) {
     ...
     
     // package imported and necessary
-    if (packageMust.contains(line)) {
-      packageChecked.add(line);
-    }
-    // package imported and illegal
-    if (packageIllegal.contains(line)) {
-      // ISSUE
-      context.reportIssue(this, tree, "Illegal pakcage");
-    }
-    // simple type with full type
-    int posBeforeName = line.lastIndexOf(".");
-    String name = line.substring(posBeforeName+1);
-    if (StringUtils.isNotEmpty(name)) types2Fullname.putIfAbsent(name, line);
+        if (packageMust.contains(line)) {
+            packageChecked.add(line);
+        }
+        // package imported and illegal
+        if (packageIllegal.contains(line)) {
+            // ISSUE
+            context.reportIssue(this, tree, "Illegal pakcage");
+        }
+        // class name to full type
+        String name = xImportVisitor.getClassName();
+        if (StringUtils.isNotEmpty(name)) types2Fullname.putIfAbsent(name, line);
     
     ...
-  }
+}
 ```
 
   
@@ -106,24 +105,24 @@ public void visitImport(ImportTree tree) {
 > 2. Based on packageMust, get logger variables and cache them
 
 ```
-  @Override
-  public void visitVariable(VariableTree tree) {
-    ...
+@Override
+public void visitVariable(VariableTree tree) {
+	...
+	
+	// each variables with its full-tpye
+	String varName = tree.simpleName().toString();
+	String varType = tree.type().toString();
+	String varFulltype = types2Fullname.get(varType);
+	if (varFulltype == null) varFulltype = varType;
+	variables2Fulltype.putIfAbsent(varName, varFulltype);
 
-    // each variables with its full-tpye
-    String varName = tree.simpleName().toString();
-    String varType = tree.type().toString();
-    String varFulltype = types2Fullname.get(varType);
-    if (varFulltype == null) varFulltype = varType;
-    variables2Fulltype.putIfAbsent(varName, varFulltype);
+	// if it is logger variables
+	if (packageMust.contains(varFulltype)) {
+		variablesLogger.putIfAbsent(varName, varFulltype);
+	}
 
-    // if it is logger variables
-    if (packageMust.contains(varFulltype)) {
-      variablesLogger.putIfAbsent(varName, varFulltype);
-    }
-
-    ...
-  }
+	...
+}
 ```
 
 
@@ -135,41 +134,41 @@ public void visitImport(ImportTree tree) {
 > 3. Check if the statement contains keywords such as TraceId (TODO)
 
 ```
-  @Override
-  public void visitExpressionStatement(ExpressionStatementTree tree) {
-    ...
+@Override
+public void visitExpressionStatement(ExpressionStatementTree tree) {
+	...
 
-    // check if caller is logger
-    if (features.size() > 0 && features.containsKey("callers")) {
-      Set<String> callers = (Set<String>) features.get("callers");
-      boolean isLoggerCaller = false;
-      for (String caller : callers) {
-        if (variablesLogger.containsKey(caller)) {
-          isLoggerCaller = true;
-          break;
-        }
-      }
-      // check if the statement contain sensitive word
-      boolean isContainSerect = false;
-      if (isLoggerCaller) {
-        String statement = sb.toString().toLowerCase();
-        // check statement if contains secret
-        for (String word : secrecKeywordsSet) {
-          int posWord = statement.indexOf(word.toLowerCase());
-          if (posWord > -1) {
-            isContainSerect = true;
-            break;
-          }
-        }
-      }
-      // create Issue if the statement contain sensitive word
-      if (isContainSerect) {
-        context.reportIssue(this, tree, "Log content contains secret keyword");
-      }
-    }
+	// check if caller is logger
+	Set<String> callers = xExpressionStatementVisitor.getCaller();
+	if (callers != null && callers.size() > 0) {
+		boolean isLoggerCaller = false;
+		for (String caller : callers) {
+			if (variablesLogger.containsKey(caller)) {
+				isLoggerCaller = true;
+				break;
+			}
+		}
+		// check if the statement contain sensitive word
+		boolean isContainSerect = false;
+		if (isLoggerCaller) {
+			String statement = line.toLowerCase();
+			// check statement if contains secret
+			for (String word : secrecKeywordsSet) {
+				int posWord = statement.indexOf(word.toLowerCase());
+				if (posWord > -1) {
+					isContainSerect = true;
+					break;
+				}
+			}
+		}
+		// create Issue if the statement contain sensitive word
+		if (isContainSerect) {
+			context.reportIssue(this, tree, "Log content contains secret keyword");
+		}
+	}
 
 	...
-  }
+}
 ```
 
 
@@ -202,7 +201,8 @@ public void visitImport(ImportTree tree) {
 
 #### IDEA UnitTest
 
-> Select com.xcom.demo.sonar.logging.AppTest，Start Debugging through right-click menu 
+> 1. build command: `mvn clean pakage -DskipTests=true`
+> 2. Select com.xcom.demo.sonar.logging.AppTest，Start Debugging through right-click menu 
 
 
 
